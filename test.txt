@@ -1,0 +1,65 @@
+variable "resource_group_name" {
+  description = "The name of the resource group"
+  type        = string
+}
+
+variable "resource_group_location" {
+  description = "The location of the resource group"
+  type        = string
+  default     = "East US"
+}
+
+variable "app_service_name" {
+  description = "The name of the App Service"
+  type        = string
+}
+
+variable "app_service_plan_name" {
+  description = "The name of the App Service plan"
+  type        = string
+}
+
+variable "sql_server_name" {
+  description = "The name of the SQL Server"
+  type        = string
+}
+
+variable "sql_admin_username" {
+  description = "The admin username for the SQL Server"
+  type        = string
+}
+
+variable "sql_admin_password" {
+  description = "The admin password for the SQL Server"
+  type        = string
+}
+
+variable "sql_database_name" {
+  description = "The name of the SQL database"
+  type        = string
+}
+
+variable "event_topic_name" {
+  description = "The name of the Event Grid topic"
+  type        = string
+}
+
+variable "storage_account_name" {
+  description = "The name of the Storage Account"
+  type        = string
+}
+
+variable "app_insights_name" {
+  description = "The name of the Application Insights"
+  type        = string
+}
+
+variable "notification_hub_namespace_name" {
+  description = "The name of the Notification Hub Namespace"
+  type        = string
+}
+
+variable "notification_hub_name" {
+  description = "The name of the Notification Hub"
+  type        = string
+}
