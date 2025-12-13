@@ -1,44 +1,44 @@
 variable "resource_group_name" {
-  description = "Name of the resource group"
+  description = "The name of the resource group"
   type        = string
 }
 
 variable "location" {
-  description = "Location of the resources"
-  type        = string
-}
-
-variable "app_service_plan_name" {
-  description = "Name of the App Service Plan"
-  type        = string
-}
-
-variable "app_service_name" {
-  description = "Name of the App Service"
+  description = "The Azure location where the resources will be created"
   type        = string
 }
 
 variable "storage_account_name" {
-  description = "Name of the Storage Account"
+  description = "The name of the storage account"
   type        = string
 }
 
-variable "monitor_name" {
-  description = "Name of the Monitor"
+variable "app_service_plan_name" {
+  description = "The name of the App Service plan"
   type        = string
 }
 
-variable "log_analytics_workspace_id" {
-  description = "ID of the Log Analytics Workspace"
+variable "app_service_name" {
+  description = "The name of the App Service"
   type        = string
 }
 
-variable "eventhub_namespace" {
-  description = "Name of the Event Hub Namespace"
+variable "app_insights_name" {
+  description = "The name of the Application Insights resource"
   type        = string
 }
 
-variable "eventhub_name" {
-  description = "Name of the Event Hub"
+variable "key_vault_name" {
+  description = "The name of the Key Vault"
+  type        = string
+}
+
+variable "eventhub_namespace_name" {
+  description = "The name of the Event Hub namespace"
+  type        = string
+}
+
+variable "tenant_id" {
+  description = "The Tenant ID for Azure Key Vault"
   type        = string
 }
