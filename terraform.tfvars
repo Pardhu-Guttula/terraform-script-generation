@@ -1,3 +1,5 @@
 resource_group_name = "example-resources"
 location            = "East US"
-tenant_id           = "your-tenant-id"
+storage_account_name = "examplestoracc"
+key_vault_name      = "examplekeyvault"
+log_analytics_workspace_name = "example-workspace"
