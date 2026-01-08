@@ -1,14 +1,24 @@
 variable "resource_group_name" {
-  description = "The name of the resource group in which to create the resources."
+  description = "The name of the resource group"
   type        = string
 }
 
 variable "location" {
-  description = "The Azure location where the resources will be created."
+  description = "The location of the resources"
   type        = string
 }
 
-variable "tenant_id" {
-  description = "The Tenant ID for Azure Key Vault."
+variable "storage_account_name" {
+  description = "The name of the storage account"
+  type        = string
+}
+
+variable "key_vault_name" {
+  description = "The name of the Key Vault"
+  type        = string
+}
+
+variable "log_analytics_workspace_name" {
+  description = "The name of the Log Analytics Workspace"
   type        = string
 }
