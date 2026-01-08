@@ -1,34 +1,15 @@
+variable "location" {
+  description = "The Azure Region"
+  default     = "East US"
+}
+
 variable "resource_group_name" {
   description = "The name of the resource group"
-  type        = string
+  default     = "banking-portal-rg"
 }
 
-variable "location" {
-  description = "The Azure region"
+variable "sql_password" {
+  description = "Password for SQL Server admin"
   type        = string
-}
-
-variable "storage_account_name" {
-  description = "The name of the storage account"
-  type        = string
-}
-
-variable "app_insights_name" {
-  description = "The name of Application Insights"
-  type        = string
-}
-
-variable "key_vault_name" {
-  description = "The name of the Key Vault"
-  type        = string
-}
-
-variable "tenant_id" {
-  description = "The tenant ID"
-  type        = string
-}
-
-variable "eventgrid_topic_name" {
-  description = "The name of the Event Grid Topic"
-  type        = string
+  sensitive   = true
 }
