@@ -1,7 +1,1 @@
-resource_group_name     = "example-resources"
-location                = "West Europe"
-storage_account_name    = "examplestoracc"
-app_insights_name       = "exampleappinsights"
-key_vault_name          = "examplekeyvault"
-tenant_id               = "example-tenant-id"
-eventgrid_topic_name    = "exampleeventgrid"
+sql_password = "YourSecurePassword123!@#"
