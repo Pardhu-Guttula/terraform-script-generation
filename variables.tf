@@ -1,15 +1,14 @@
-variable "location" {
-  description = "The Azure Region"
-  default     = "East US"
-}
-
-variable "resource_group_name" {
-  description = "The name of the resource group"
-  default     = "banking-portal-rg"
-}
-
-variable "sql_password" {
-  description = "Password for SQL Server admin"
+variable "sql_admin_username" {
+  description = "The admin username for the SQL Server."
   type        = string
-  sensitive   = true
+}
+
+variable "sql_admin_password" {
+  description = "The admin password for the SQL Server."
+  type        = string
+}
+
+variable "principal_id" {
+  description = "The principal ID to assign the role."
+  type        = string
 }
