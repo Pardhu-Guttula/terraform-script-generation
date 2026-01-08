@@ -1,86 +1,98 @@
-provider 'azurerm' {
+provider "azurerm" {
   features {}
   required_providers {
     azurerm = {
-      source  = 'hashicorp/azurerm'
-      version = '~> 4.56.0'
+      source = "hashicorp/azurerm"
+      version = "~> 4.56.0"
     }
   }
 }
-resource 'azurerm_resource_group' 'rg' {
-  name     = 'rg-sample'
-  location = 'East US'
+
+resource "azurerm_resource_group" "rg" {
+  name     = var.resource_group_name
+  location = var.location
 }
-resource 'azurerm_app_service_plan' 'asp' {
-  name                = 'asp-sample'
+
+resource "azurerm_app_service_plan" "asp" {
+  name                = "example-appserviceplan"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   sku {
-    tier = 'Basic'
-    size = 'B1'
+    tier = "Standard"
+    size = "S1"
   }
 }
-resource 'azurerm_app_service' 'app_service' {
-  name                = 'app-sample'
+
+resource "azurerm_app_service" "app_service" {
+  name                = "example-appservice"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   app_service_plan_id = azurerm_app_service_plan.asp.id
   site_config {
     always_on = true
   }
-}
-resource 'azurerm_key_vault' 'kv' {
-  name                = 'kv-sample'
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
-  tenant_id           = data.azurerm_client_config.current.tenant_id
-  sku_name            = 'standard'
-  soft_delete_enabled = true
-}
-resource 'azurerm_api_management' 'apim' {
-  name                = 'apim-sample'
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
-  publisher_name      = 'pub-name'
-  publisher_email     = 'pub-email@example.com'
-  sku_name            = 'Developer_1'
-}
-resource 'azurerm_sql_server' 'sql_server' {
-  name                         = 'sql-server-sample'
-  resource_group_name          = azurerm_resource_group.rg.name
-  location                     = azurerm_resource_group.rg.location
-  version                      = '12.0'
-  administrator_login          = 'adminuser'
-  administrator_login_password = 'AdminPassword123!'
-}
-resource 'azurerm_sql_database' 'sql_db' {
-  name                = 'sqldb-sample'
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
-  server_name         = azurerm_sql_server.sql_server.name
-  sku_name            = 'S0'
-}
-resource 'azurerm_cosmosdb_account' 'cosmosdb' {
-  name                = 'cosmosdb-sample'
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
-  offer_type          = 'Standard'
-  kind                = 'GlobalDocumentDB'
-  consistency_policy {
-    consistency_level = 'Eventual'
+  app_settings = {
+    "APPINSIGHTS_INSTRUMENTATIONKEY" = azurerm_application_insights.app_insights.instrumentation_key
+    "APPLICATIONINSIGHTS_CONNECTION_STRING" = azurerm_application_insights.app_insights.connection_string
   }
 }
-resource 'azurerm_notification_hub_namespace' 'nh_namespace' {
-  name                = 'nh-namespace-sample'
+
+resource "azurerm_application_insights" "app_insights" {
+  name                = "example-appinsights"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
-  sku {
-    name     = 'Basic'
-    capacity = 1
+  application_type    = "web"
+}
+
+resource "azurerm_storage_account" "storageaccount" {
+  name                     = "examplestorageacct"
+  resource_group_name      = azurerm_resource_group.rg.name
+  location                 = azurerm_resource_group.rg.location
+  account_tier             = "Standard"
+  account_replication_type = "LRS"
+}
+
+resource "azurerm_monitor_diagnostic_setting" "diagnostic_setting" {
+  name               = "example-diagnostic-setting"
+  target_resource_id = azurerm_application_insights.app_insights.id
+  eventhub_authorization_rule_id = "event_hubs_auth_rule_id"
+  log_analytics_workspace_id     = "workspace_id"
+
+  enabled_log {
+    category = "Administrative"
+  }
+
+  metric {
+    category = "AllMetrics"
+    enabled  = true
   }
 }
-resource 'azurerm_notification_hub' 'nhub' {
-  name                = 'nhub-sample'
+
+resource "azurerm_key_vault" "kv" {
+  name                        = "example-keyvault"
+  location                    = azurerm_resource_group.rg.location
+  resource_group_name         = azurerm_resource_group.rg.name
+  enabled_for_disk_encryption = true
+}
+
+resource "azurerm_api_management" "api_management" {
+  name                = "example-api-mgmt"
+  location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
-  namespace_name      = azurerm_notification_hub_namespace.nh_namespace.name
-}}
+  publisher_name      = "examplepublisher"
+  publisher_email     = "admin@example.com"
+  sku_name            = "Developer_1"
+}
+
+resource "azurerm_service_bus_namespace" "namespace" {
+  name                = "example-sbnamespace"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  sku                 = "Standard"
+}
+
+resource "azurerm_service_bus_queue" "queue" {
+  name                = "example-sbqueue"
+  resource_group_name = azurerm_resource_group.rg.name
+  namespace_name      = azurerm_service_bus_namespace.namespace.name
+}
