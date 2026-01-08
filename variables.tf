@@ -1,11 +1,14 @@
 variable "resource_group_name" {
-  description = "The name of the resource group"
+  description = "The name of the resource group in which to create the resources."
   type        = string
-  default     = "rg-example"
 }
 
 variable "location" {
-  description = "The location of the resources"
+  description = "The Azure location where the resources will be created."
   type        = string
-  default     = "East US"
+}
+
+variable "tenant_id" {
+  description = "The Tenant ID for Azure Key Vault."
+  type        = string
 }
