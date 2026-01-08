@@ -4,7 +4,7 @@ variable "resource_group_name" {
 }
 
 variable "location" {
-  description = "The location of the resources"
+  description = "The Azure region"
   type        = string
 }
 
@@ -13,12 +13,22 @@ variable "storage_account_name" {
   type        = string
 }
 
+variable "app_insights_name" {
+  description = "The name of Application Insights"
+  type        = string
+}
+
 variable "key_vault_name" {
   description = "The name of the Key Vault"
   type        = string
 }
 
-variable "log_analytics_workspace_name" {
-  description = "The name of the Log Analytics Workspace"
+variable "tenant_id" {
+  description = "The tenant ID"
+  type        = string
+}
+
+variable "eventgrid_topic_name" {
+  description = "The name of the Event Grid Topic"
   type        = string
 }
