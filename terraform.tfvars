@@ -1,11 +1,3 @@
-resource_group_name = 'rg-sample'
-location            = 'East US'
-app_service_plan_name = 'asp-sample'
-app_service_name     = 'app-sample'
-key_vault_name       = 'kv-sample'
-api_management_name  = 'apim-sample'
-sql_server_name      = 'sql-server-sample'
-sql_database_name    = 'sqldb-sample'
-cosmosdb_name        = 'cosmosdb-sample'
-notification_hub_namespace_name = 'nh-namespace-sample'
-notification_hub_name = 'nhub-sample'
+resource_group_name = "example-resources"
+location            = "East US"
+tenant_id           = "your-tenant-id"
