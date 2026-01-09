@@ -5,7 +5,6 @@ terraform {
       version = "~> 4.56.0"
     }
   }
-  required_version = ">= 0.15.0"
 }
 
 provider "azurerm" {
@@ -14,109 +13,109 @@ provider "azurerm" {
 
 resource "azurerm_resource_group" "example" {
   name     = "example-resources"
-  location = "East US"
+  location = "West Europe"
 }
 
-resource "azurerm_app_service_plan" "example" {
-  name                = "example-appserviceplan"
-  location            = azurerm_resource_group.example.location
-  resource_group_name = azurerm_resource_group.example.name
-  sku {
-    tier = "Basic"
-    size = "B1"
-  }
-}
-
-resource "azurerm_app_service" "example" {
-  name                = "example-app"
+resource "azurerm_app_service" "frontend" {
+  name                = "frontend-app-service"
   location            = azurerm_resource_group.example.location
   resource_group_name = azurerm_resource_group.example.name
   app_service_plan_id = azurerm_app_service_plan.example.id
-  site_config {
-    app_settings = {
-      "WEBSITE_RUN_FROM_PACKAGE" = "1"
-    }
-  }
+}
+
+resource "azurerm_active_directory_domain_service" "aad_b2c" {
+  name                = "aad-service"
+  resource_group_name = azurerm_resource_group.example.name
+  location            = azurerm_resource_group.example.location
+}
+
+resource "azurerm_api_management" "example" {
+  name                = "example-api"
+  location            = azurerm_resource_group.example.location
+  resource_group_name = azurerm_resource_group.example.name
+  publisher_name      = "My Publisher"
+  publisher_email     = "[email&#64;example.com]"
+}
+
+resource "azurerm_function_app" "backend_functions" {
+  name                = "backend-functions"
+  location            = azurerm_resource_group.example.location
+  resource_group_name = azurerm_resource_group.example.name
+  app_service_plan_id = azurerm_app_service_plan.example.id
+}
+
+resource "azurerm_logic_app" "example" {
+  name                = "example-logic-app"
+  location            = azurerm_resource_group.example.location
+  resource_group_name = azurerm_resource_group.example.name
 }
 
 resource "azurerm_sql_server" "example" {
-  name                         = "example-sqlserver"
+  name                         = "example-sql-server"
   resource_group_name          = azurerm_resource_group.example.name
   location                     = azurerm_resource_group.example.location
   version                      = "12.0"
-  administrator_login          = var.sql_admin_user
-  administrator_login_password = var.sql_admin_password
+  administrator_login          = "[SQL_ADMIN]"
+  administrator_login_password = "[SQL_PASSWORD]"
 }
 
 resource "azurerm_sql_database" "example" {
-  name                = "example-db"
+  name                = "example-sql-database"
   resource_group_name = azurerm_resource_group.example.name
   location            = azurerm_resource_group.example.location
   server_name         = azurerm_sql_server.example.name
-  sku_name            = "S0"
+  edition             = "Basic"
 }
 
 resource "azurerm_storage_account" "example" {
-  name                     = "examplestorageacct"
+  name                     = "examplestoracc"
   resource_group_name      = azurerm_resource_group.example.name
   location                 = azurerm_resource_group.example.location
   account_tier             = "Standard"
   account_replication_type = "LRS"
 }
 
-resource "azurerm_monitor" "example" {
-  name                = "example-monitor"
+resource "azurerm_notification_hub_namespace" "example" {
+  name                = "example-notification-hub-namespace"
   location            = azurerm_resource_group.example.location
   resource_group_name = azurerm_resource_group.example.name
 }
 
-resource "azurerm_monitor_diagnostic_setting" "example" {
-  name                        = "example-monitor-diagnostic"
-  target_resource_id          = azurerm_app_service.example.id
-  log_analytics_workspace_id  = var.log_analytics_workspace_id
-  enabled_log {
-    category = "AppServiceHTTPLogs"
-    enabled  = true
-  }
-  metric {
-    category = "AllMetrics"
-    enabled  = true
-  }
-}
-
-resource "azurerm_log_analytics_workspace" "example" {
-  name                = "example-law"
+resource "azurerm_monitor_log_analytics_workspace" "example" {
+  name                = "example-log-workspace"
   location            = azurerm_resource_group.example.location
   resource_group_name = azurerm_resource_group.example.name
   sku                 = "PerGB2018"
 }
 
 resource "azurerm_key_vault" "example" {
-  name                        = "example-kv"
-  location                    = azurerm_resource_group.example.location
-  resource_group_name         = azurerm_resource_group.example.name
-  tenant_id                   = var.tenant_id
-  sku_name                    = "standard"
-}
-
-resource "azurerm_api_management" "example" {
-  name                = "example-apim"
+  name                = "example-keyvault"
   location            = azurerm_resource_group.example.location
   resource_group_name = azurerm_resource_group.example.name
-  publisher_name      = "Example"
-  publisher_email     = "example@example.com"
-  sku_name            = "Developer_1"
+  tenant_id           = "[TENANT_ID]"
 }
 
-resource "azurerm_notification_hub_namespace" "example" {
-  name                = "example-nhns"
+resource "azurerm_security_center_contact" "example" {
+  name                = "example-security-center"
   location            = azurerm_resource_group.example.location
   resource_group_name = azurerm_resource_group.example.name
-  sku_name            = "Free"
 }
 
-resource "azurerm_notification_hub" "example" {
-  name                = "example-nh"
+resource "azurerm_frontdoor" "example" {
+  name                = "example-frontdoor"
+  location            = azurerm_resource_group.example.location
   resource_group_name = azurerm_resource_group.example.name
-  namespace_name      = azurerm_notification_hub_namespace.example.name
+}
+
+resource "azurerm_traffic_manager_profile" "example" {
+  name                   = "example-traffic-manager"
+  resource_group_name    = azurerm_resource_group.example.name
+  location               = azurerm_resource_group.example.location
+  traffic_routing_method = "Performance"
+}
+
+resource "azurerm_backup_policy_vm" "example" {
+  name                = "example-vm-backup"
+  resource_group_name = azurerm_resource_group.example.name
+  location            = azurerm_resource_group.example.location
 }
