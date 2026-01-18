@@ -1,1 +1,7 @@
-sql_admin_password = "YourStrongPasswordHere!"
+sql_admin_user        = "admin"
+sql_admin_password    = "Password1234"
+log_analytics_workspace_id = "<log_analytics_workspace_id>"
+tenant_id             = "<tenant_id>"
+principal_id          = "<principal_id>"
+role_definition_name  = "Owner"
+project_id            = "<project_id>"
