@@ -1,8 +1,2 @@
-resource_group_name = "example-resources"
-location = "East US"
-sql_admin_username = "sqladmin"
-sql_admin_password = "H@Sh1CoR3!"
-tenant_id = "your-tenant-id"
-role_definition_name = "example-role"
-organization_name = "example-org"
-principal_id = "your-principal-id"
+sql_admin_username = 'admin_user'
+sql_admin_password = 'admin_password'
