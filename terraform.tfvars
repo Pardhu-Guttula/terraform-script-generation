@@ -1,2 +1,3 @@
-tenant_id     = "<your-tenant-id>"
-sql_password = "<your-sql-password>"
+resource_group_name = 'myResourceGroup'
+location            = 'CentralUS'
+sql_password        = 'your_password_here'
