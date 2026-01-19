@@ -1,3 +1,4 @@
+resource_group_name = "example-resources"
 location = "East US"
-log_analytics_workspace_id = "your_log_analytics_workspace_id"
-sql_password = "your_sql_password"
+sql_admin_password = "ExamplePassword1234"
+tenant_id = "your-tenant-id"
