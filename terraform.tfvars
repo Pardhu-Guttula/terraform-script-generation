@@ -1,3 +1,2 @@
-resource_group_name = 'myResourceGroup'
-location            = 'CentralUS'
-sql_password        = 'your_password_here'
+sql_admin_user     = "adminuser"
+sql_admin_password = "P@ssw0rd1234"
